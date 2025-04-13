@@ -1,18 +1,22 @@
 from maze_generator import generate_maze, print_maze
 from pathfinder import dfs
 
-def main():
-    # Ввод размера лабиринта от пользователя
-    try:
-        width = int(input("Введите ширину лабиринта: "))
-        height = int(input("Введите высоту лабиринта: "))
-    except ValueError:
-        print("Пожалуйста, введите целые числа для ширины и высоты.")
-        return
+def mark_path(maze, path):
+    for x, y in path:
+        if maze[x][y] == ' ':
+            maze[x][y] = '.'
 
-    if width < 5 or height < 5:
-        print("Размер лабиринта должен быть не менее 5x5.")
-        return
+def main():
+    while True:
+        try:
+            width = int(input("Введите ширину лабиринта (не менее 5): "))
+            height = int(input("Введите высоту лабиринта (не менее 5): "))
+            if width >= 5 and height >= 5:
+                break
+            else:
+                print("Ошибка: ширина и высота должны быть не менее 5.")
+        except ValueError:
+            print("Ошибка: введите целые числа.")
 
     maze, start, end = generate_maze(width, height)
     
@@ -21,16 +25,9 @@ def main():
     
     path = []
     if dfs(maze, start[0], start[1], end, path):
-        print("\nПуть найден:")
-        print(path)
-
-        # Отметить путь в лабиринте точками
-        for x, y in path:
-            if (x, y) != start and (x, y) != end:  # Убедимся, что старт и финиш не заменяются
-                maze[y][x] = '.'  # Помечаем путь точками
-
-        # Выводим лабиринт с помеченным путём
-        print("\nЛабиринт с найденным путём:")
+        print("\nПуть найден.")
+        mark_path(maze, path)
+        print("\nЛабиринт с отмеченным путём:")
         print_maze(maze)
     else:
         print("\nПуть не найден.")
