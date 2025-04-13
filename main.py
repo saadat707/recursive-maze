@@ -34,14 +34,14 @@ def mark_path(maze, path):
 def main():
     while True:
         try:
-            width = int(input("Введите ширину лабиринта (не менее 5): "))
-            height = int(input("Введите высоту лабиринта (не менее 5): "))
-            if width >= 5 and height >= 5:
+            width = int(input("Введите ширину лабиринта (не менее 10): "))
+            height = int(input("Введите высоту лабиринта (не менее 10): "))
+            if width >= 10 and height >= 10:
                 break
             else:
-                print("Ошибка: ширина и высота должны быть не менее 5.")
+                print("Ошибка: ширина и высота должны быть не менее 10.")
         except ValueError:
-            print("Ошибка: введите целые числа.")
+            print("Размер лабиринта должен быть не менее 10*10.Попробуйте снова.")
 
     maze, start, end = generate_maze(width, height)
     
