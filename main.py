@@ -32,5 +32,5 @@ def main():
     else:
         print("\nПуть не найден.")
 
-if __name__ == "__main__":
+if name == "__main__":
     main()
