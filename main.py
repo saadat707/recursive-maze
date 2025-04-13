@@ -4,7 +4,9 @@ from pathfinder import dfs
 def mark_path(maze, path):
     for x, y in path:
         if maze[x][y] == ' ':
-            maze[x][y] = '.'
+            maze[x][y] = '.'  # Помечаем путь точками
+        elif maze[x][y] == 'S' or maze[x][y] == 'E':  # Если это начальная или конечная точка
+            continue  # Оставляем S и E без изменений
 
 def main():
     while True:
@@ -25,8 +27,10 @@ def main():
     
     path = []
     if dfs(maze, start[0], start[1], end, path):
-        print("\nПуть найден.")
-        mark_path(maze, path)
+    print("\nПуть найден.")
+    path_without_start = [pos for pos in path if pos != start]
+    mark_path(maze, path_without_start)
+    
         print("\nЛабиринт с отмеченным путём:")
         print_maze(maze)
     else:
