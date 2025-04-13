@@ -12,7 +12,7 @@ def generate_maze(width, height):
 
     # Рекурсивная генерация пути
     def carve_passages(x, y):
-        directions = [(2, 0), (-2, 0), (0, 2), (0, -2)]  # Направления для срезания стен
+        directions = [(2, 0), (-2, 0), (0, 2), (0, -2)]
         random.shuffle(directions)
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
@@ -33,7 +33,7 @@ def generate_maze(width, height):
 
     return maze, (start_x, start_y), (end_x, end_y)
 
-# Функция для отображения лабиринта
+
 def print_maze(maze):
     for row in maze:
         print(''.join(row))

@@ -1,12 +1,35 @@
 from maze_generator import generate_maze, print_maze
-from pathfinder import dfs
+
+def dfs(maze, x, y, end, path):
+    if (x, y) == end:
+        path.append((x, y))
+        return True
+
+    if maze[x][y] == '#' or maze[x][y] == '.':
+        return False
+
+    maze[x][y] = '.'  # Помечаем как посещённую
+
+    path.append((x, y))
+
+    # Направления для поиска пути: вниз, вверх, вправо, влево
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+    for dx, dy in directions:
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < len(maze) and 0 <= ny < len(maze[0]):
+            if dfs(maze, nx, ny, end, path):
+                return True
+
+    path.pop()  # Возврат (обратный отсчёт)
+    return False
+
 
 def mark_path(maze, path):
     for x, y in path:
         if maze[x][y] == ' ':
-            maze[x][y] = '.'  # Помечаем путь точками
-        elif maze[x][y] == 'S' or maze[x][y] == 'E':  # Если это начальная или конечная точка
-            continue  # Оставляем S и E без изменений
+            maze[x][y] = '.'
+
 
 def main():
     while True:
@@ -27,14 +50,14 @@ def main():
     
     path = []
     if dfs(maze, start[0], start[1], end, path):
-    print("\nПуть найден.")
-    path_without_start = [pos for pos in path if pos != start]
-    mark_path(maze, path_without_start)
-    
+        print("\nПуть найден.")
+        path_without_start = [pos for pos in path if pos != start]
+        mark_path(maze, path_without_start)
         print("\nЛабиринт с отмеченным путём:")
         print_maze(maze)
     else:
         print("\nПуть не найден.")
+
 
 if __name__ == "__main__":
     main()
